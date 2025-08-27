@@ -1,5 +1,5 @@
-const jwt = require('jsonwebtoken');
-const prisma = require('../lib/prisma');
+import { verify } from 'jsonwebtoken';
+import { user as _user } from '../lib/prisma';
 
 const authenticateToken = async (req, res, next) => {
     const authHeader = req.headers['authorization'];
@@ -8,8 +8,8 @@ const authenticateToken = async (req, res, next) => {
         return res.status(401).json({ error: 'Access Token Required' });
     }
     try {
-        const decoded = jwt.verify(token, process.env.JWT_SECRET);
-        const user = await prisma.user.findUnique({
+        const decoded = verify(token, process.env.JWT_SECRET);
+        const user = await _user.findUnique({
             where: { id: decoded.userId },
             select: { id: true,  email: true }
         })
@@ -22,4 +22,4 @@ const authenticateToken = async (req, res, next) => {
         return res.status(403).json({ error: 'Invalid or Expired Token' });
     }
 }
-module.exports = authenticateToken;
+export default authenticateToken;
