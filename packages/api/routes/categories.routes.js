@@ -5,4 +5,5 @@ const {autheticateToken} = require('../middleware/auth');
 const router = express.Router();
 router.use(autheticateToken)
 router.get('/', categoryController.getAllCategories);
-router.post('/', categoryController.createCategory);""
+router.post('/', categoryController.createCategory);
+router.put('/:id', categoryController.updateCategory);
