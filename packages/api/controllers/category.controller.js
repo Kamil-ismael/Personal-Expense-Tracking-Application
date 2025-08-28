@@ -75,6 +75,31 @@ const categoryController = {
       console.error('Update category error:', error);
       res.status(500).json({ error: 'Internal server error'});
     }
+  },
+  async deleteCategory(req, res) {
+    try {
+      const { id } = req.params;
+      await prisma.category.delete({
+        where: {
+          id,
+          userId: req.user.id
+        }
+      });
+      res.status(204).send();    
+    }catch (error) {
+      if(error.code === 'P2025'){
+        return res.status(404).json({
+          error: 'Category not found'
+        });
+      }
+      if(error.code === 'P2003') {
+        return res.status(409).json({
+          error: 'Cannot delete category: it is currently linked to existing expense. Please reassign or delete associated expenses first.'
+        });
+      }
+      console.error('Delete category error:', error);
+      res.status(500).json({ error: 'Internal server error' });
+    }
   }
 };
 
