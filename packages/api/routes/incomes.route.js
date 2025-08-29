@@ -7,4 +7,7 @@ router.use(autheticateToken);
 router.get('/', incomeController.getAllIncomes);
 router.get('/:id', incomeController.getIncomesById);
 router.post('/', incomeController.createIncome);
-router.put('/:id',incomeController.updateCategory);
+router.put('/:id',incomeController.updateIncome);
+router.delete('/:id',incomeController.deleteIncome);
+
+module.exports = router;

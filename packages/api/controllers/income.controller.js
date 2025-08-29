@@ -61,32 +61,48 @@ const incomeController = {
             res.status(500).json({ error: 'Internal server error '});
         }
     },
-    async updateCategory(req, res){
+    async updateIncome(req, res){
         try {
             const { id } = req.params;
-            const { name } = req.body;
-            if(!name || name.trim()){
-                return res.status(400).json({error: 'Category name is required'});
-            }
-            const category = await prisma.category.update({
-                where:{
-                    id,
-                    userId: req.user.id
+            const { amount, date, source, description } = req.body;
+            const income = await prisma.income.update({
+                where: {
+                id,
+                userId: req.user.id
                 },
-                data:{
-                    name: name.trim()
+                data: {
+                amount: parseFloat(amount),
+                date: new Date(date),
+                source,
+                description: description || ''
                 }
             });
-            res.json(category);
+            res.json(income);
         } catch (error) {
-            if(error.code === 'P2025'){
-                return res.status(404).json({error: 'Category not found'});
-            }
-            if(error.code === 'P2002'){
-                return res.status(400).json({error: 'Category name already exists'});
-            }
-            console.error('Update category error:', error);
-            res.status(500).json({error: 'Internal server error'})
+        if (error.code === 'P2025') {
+            return res.status(404).json({ error: 'Income not found' });
+        }
+        console.error('Update income error:', error);
+        res.status(500).json({ error: 'Internal server error' });
+        }
+    },
+    async deleteIncome (req, res) {
+        try {
+            const { id } = req.params;
+
+            await prisma.income.delete({
+                where: {
+                id,
+                userId: req.user.id
+                }
+            });
+            res.status(204).send();
+        } catch (error) {
+        if (error.code === 'P2025') {
+            return res.status(404).json({ error: 'Income not found' });
+        }
+        console.error('Delete income error:', error);
+        res.status(500).json({ error: 'Internal server error' });
         }
     }
 };
