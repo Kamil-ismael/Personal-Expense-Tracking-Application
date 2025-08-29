@@ -39,6 +39,27 @@ const incomeController = {
             console.error('Get income error:', error);
             res.status(500).json({ error: 'Internal server error' });
         }
+    },
+    async createIncome(req, res){
+        try {
+            const { amount, date, source, description } = req.body;
+            if(!amount || !date || !source){
+                return res.status(400).json({ error: 'Amount, date, and source are required' });
+            }
+            const income = await prisma.income.create({
+                data: {
+                    amount: parseFloat(amount),
+                    date: new Date(date),
+                    source,
+                    description: description || '',
+                    userId: req.user.id
+                }
+            });
+            res.status(201).json(income);
+        } catch (error){
+            console.error('Create income error:', error);
+            res.status(500).json({ error: 'Internal server error '});
+        }
     }
 };
 
