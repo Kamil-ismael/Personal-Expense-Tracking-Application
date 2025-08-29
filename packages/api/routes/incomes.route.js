@@ -5,3 +5,4 @@ const {autheticateToken} = require('../middleware/auth');
 const router = express.Router();
 router.use(autheticateToken);
 router.get('/', incomeController.getAllIncomes);
+router.get('/:id', incomeController.getIncomesById);

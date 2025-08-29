@@ -21,6 +21,24 @@ const incomeController = {
             console.error('Get incomes error:', error);
             res.status(500).json({ error: 'Internal server error' });
         }
+    },
+    async getIncomesById(req, res){
+        try {
+            const { id } = req.params;
+            const income = await prisma.income.findFirst({
+                where: {
+                    id,
+                    userId: req.user.id
+                }
+            });
+            if(!income){
+                return res.status(404).json({ error: 'Income not found' });
+            }
+            res.json(income);
+        } catch (error) {
+            console.error('Get income error:', error);
+            res.status(500).json({ error: 'Internal server error' });
+        }
     }
 };
 
