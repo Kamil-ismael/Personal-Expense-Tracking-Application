@@ -11,20 +11,24 @@ import {
   ResponsiveContainer 
 } from 'recharts';
 import { 
-  Euro, 
   TrendingUp, 
   TrendingDown, 
   AlertTriangle,
   Calendar
 } from 'lucide-react';
-
+import { PrismaClient } from '@prisma/client';
+import { useState, useEffect } from 'react';
 const Dashboard = () => {
-  return (
-    <ResponsiveContainer width="100%" height={300}>
-      <PieChart>
-        <Pie dataKey="value" data={[{ name: 'A', value: 100 }, { name: 'B', value: 200 }]} cx="50%" cy="50%" outerRadius={80} fill="#8884d8" label />
-      </PieChart>
-    </ResponsiveContainer>
-  );
+  const prisma = new PrismaClient();
+  const Expenses = new prisma.expense.findMany();
+  const Incomes = new prisma.income.findMany();
+  const Categories = new prisma.category.findMany();
+ 
+  const currentMonth = new Date().getMonth();
+  const currentYear = new Date().getFullYear();
+  
+  return <div>
+    bobbooooooooooooooooooooooooooooooooo
+  </div>
 }
  export default Dashboard;
