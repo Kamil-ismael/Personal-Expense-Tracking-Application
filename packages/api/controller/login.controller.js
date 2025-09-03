@@ -1,12 +1,12 @@
 import jwt from "jsonwebtoken"
 import bcrypt from "bcryptjs"
-import prisma from "../lib/prisma"
+import prisma from "../lib/prisma.js"
 
 const createUser = async (req, res)=>{
     const {email, password} = req.body
 
     if ((!email || !password)||(email == "" || password == "")) {
-        res.status(400).json({message: "Email et mot de passe requis"})
+        return res.status(400).json({message: "Email et mot de passe requis"})
     }
 
     try{
@@ -15,7 +15,7 @@ const createUser = async (req, res)=>{
         )
 
         if (checkUniqueMail) {
-            res.status(400).json({message: "email déjà existant"})
+            return res.status(400).json({message: "email déjà existant"})
         }
 
         if (password.length <8) {
@@ -52,7 +52,7 @@ const logIn = async (req, res)=>{
         )
 
         if (!user) {
-            res.status(400).json({message: "email non trouvé"})
+            return res.status(400).json({message: "email non trouvé"})
         }
 
         const checkPasswordValid = await bcrypt.compare(password, user.password)
@@ -65,7 +65,7 @@ const logIn = async (req, res)=>{
         )
         res.json({ message: "Connexion réussie", token });
     }
-    catch{
+    catch(err){
         res.status(500).json({ message: "Erreur serveur", error: err.message });
     }
 }

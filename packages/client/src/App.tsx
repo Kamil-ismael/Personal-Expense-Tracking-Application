@@ -1,12 +1,17 @@
 import './App.css'
 import LoginPage from './pages/login'
+import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import SingInPage from './pages/singIn'
 
 function App() {
 
   return (
-    <div className='w-screen h-screen flex justify-center'>
-      <LoginPage/>
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path='/' element={<LoginPage/>}></Route>
+        <Route path='/signIn' element={<SingInPage/>}></Route>
+      </Routes>
+    </BrowserRouter>
   )
 }
 

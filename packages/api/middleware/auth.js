@@ -1,5 +1,6 @@
-import { verify } from 'jsonwebtoken';
-import { user as _user } from '../lib/prisma';
+import pkg from 'jsonwebtoken';
+const { verify } = pkg;
+import prisma  from '../lib/prisma.js';
 
 const authenticateToken = async (req, res, next) => {
     const authHeader = req.headers['authorization'];
@@ -9,7 +10,7 @@ const authenticateToken = async (req, res, next) => {
     }
     try {
         const decoded = verify(token, process.env.JWT_SECRET);
-        const user = await _user.findUnique({
+        const user = await prisma.user.findUnique({
             where: { id: decoded.userId },
             select: { id: true,  email: true }
         })
