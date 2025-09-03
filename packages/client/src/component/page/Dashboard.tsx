@@ -26,9 +26,11 @@ const Dashboard = () => {
  
   const currentMonth = new Date().getMonth();
   const currentYear = new Date().getFullYear();
+
+
   
-  return <div>
-    bobbooooooooooooooooooooooooooooooooo
+  return <div className='bg-white'>
+    <h1 className='text-2xl bg-amber-500'>Dashboard</h1>
   </div>
 }
  export default Dashboard;
