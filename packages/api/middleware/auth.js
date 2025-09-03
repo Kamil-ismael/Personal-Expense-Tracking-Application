@@ -22,4 +22,4 @@ const authenticateToken = async (req, res, next) => {
         return res.status(403).json({ error: 'Invalid or Expired Token' });
     }
 }
-export default authenticateToken;
+module.exports = {authenticateToken};
