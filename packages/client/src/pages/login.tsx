@@ -1,33 +1,16 @@
 import { useState, } from "react";
 import { useNavigate } from "react-router-dom";
+import LogIn from "../hooks/useSign";
+
+const navigate = useNavigate()
 
 function LoginPage() {
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
-
-    const navigate = useNavigate()
-
-    // useEffect(()=>{
-
-    // }, [])
-    const handleSubmit = (e: React.FormEvent)=>{
-        e.preventDefault();
-        console.log("soumis")
-        fetch("http://localhost:8080/api/auth/login", {
-            method: "POST",
-            headers: {"content-type" : "application/json"},
-            body: JSON.stringify({email, password})
-        })
-            .then(data => data.json())
-            .then(data => localStorage.setItem("token",data.token))
-            .then(() => navigate("/Home"))
-            .catch(err => console.error(err))
-    }
-
     return (
         <div className="h-screen flex justify-center items-center">
             <form action="" className="flex flex-col w-1/4 h-2/3 shadow-xl m-auto items-center justify-around
-             p-1/10 bg-gray-50 p-5 rounded-xl cursor-default" onSubmit={(e)=>{handleSubmit(e)}}>
+             p-1/10 bg-gray-50 p-5 rounded-xl cursor-default" onSubmit={()=>{LogIn(email, password)}}>
                 <div className="bg-blue-400 p-7 rounded-sm">
                     <p className="font-bold text-xl">→</p>
                 </div>
