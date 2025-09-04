@@ -1,5 +1,5 @@
 import express from "express"
-import createUser from "../controller/signup.controller"
+import createUser from "../controller/signup.controller.js"
 
 const signUpRoute = express.Router()
 

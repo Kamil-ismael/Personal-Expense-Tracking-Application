@@ -1,3 +1,6 @@
+import prisma from "../lib/prisma.js"
+import bcrypt from "bcryptjs"
+
 const createUser = async (req, res) => {
     const { email, password } = req.body
 
@@ -30,11 +33,11 @@ const createUser = async (req, res) => {
         })
 
         
-        await prisma.category.create({
-            data: {
-                name: "Loyer"
-            }
-        })
+        // await prisma.category.create({
+        //     data: {
+        //         name: "Loyer"
+        //     }
+        // })
 
         res.status(201).json({ message: "Utilisateur créé", user: newUser })
     } 

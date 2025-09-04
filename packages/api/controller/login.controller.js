@@ -28,6 +28,7 @@ const logIn = async (req, res)=>{
         res.json({ message: "Connexion réussie", token });
     }
     catch(err){
+        console.error(err)
         return res.status(500).json({ message: "Erreur serveur", error: err.message });
     }
 }
