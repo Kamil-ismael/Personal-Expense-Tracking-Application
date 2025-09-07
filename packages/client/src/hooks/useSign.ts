@@ -5,6 +5,6 @@ const useSign = async (email: string, password: string) => {
         body: JSON.stringify({ email, password })
     });
 
-    return response.json(); // retourne la réponse du serveur
+    return response.json();
 }
 export default useSign;
