@@ -33,15 +33,18 @@ const createUser = async (req, res) => {
         })
 
         
-        // await prisma.category.create({
-        //     data: {
-        //         name: "Loyer"
-        //     }
-        // })
+        await prisma.category.createMany({
+            data: [
+                { name: "Loyer", userId: newUser.id },
+                { name: "Nourriture", userId: newUser.id },
+                { name: "Transport", userId: newUser.id }
+            ]
+        })
 
         res.status(201).json({ message: "Utilisateur créé", user: newUser })
     } 
     catch (err) {
+        console.error("Erreur dans createUser:", err) 
         res.status(500).json({ message: "Erreur serveur", error: err.message });
     }
 }

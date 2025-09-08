@@ -1,5 +1,4 @@
-import express from "express"
-
+const { getExpesenses, createExpense, updateExpense, deleteExpense } = require("../controllers/expense.controller");
 const app = express.Router()
 
 app.get("/", getExpesenses)
