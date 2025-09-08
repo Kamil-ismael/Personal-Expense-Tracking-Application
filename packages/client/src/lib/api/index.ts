@@ -47,4 +47,5 @@ class Api {
     return incomeApi.deleteIncome(id);
   }
 }
+
 export const api = new Api();
