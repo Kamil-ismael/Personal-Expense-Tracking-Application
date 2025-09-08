@@ -1,61 +1,186 @@
-import { useState, useEffect } from "react";
+import { useMemo } from "react";
 import { DollarSign, TrendingUp, TrendingDown, Calendar } from "lucide-react";
 import { Card } from "../contener/card";
-
+import { 
+  PieChart, 
+  Pie, 
+  Cell, 
+  BarChart, 
+  Bar, 
+  XAxis, 
+  YAxis, 
+  CartesianGrid, 
+  Tooltip, 
+  ResponsiveContainer 
+} from 'recharts';
+import { useApp } from '../../hooks/useApp';
 const Dashboard = () => {
-  const [totals, setTotals] = useState({
-    totalIncome: 0,
-    totalExpense: 0,
-    balance: 0,
-  });
+  const { expenses, incomes, categories } = useApp(); // Assuming useApp is defined elsewhere, e.g., a custom context hook
 
-  const currentMonhtName = new Date().toLocaleDateString("fr-FR", {
-    month: "long",
-    year: "numeric",
-  });
+  const currentMonth = new Date().getMonth();
+  const currentYear = new Date().getFullYear();
 
-  useEffect(() => {
-    fetch("http://localhost:5000/api/dashboard/totals")
-      .then((res) => res.json())
-      .then((data) => setTotals(data))
-      .catch((err) => console.error(err));
-  }, []);
+  const monthlyData = useMemo(() => {
+    // Filtrer les dépenses du mois en cours
+    const monthlyExpenses = expenses.filter(expense => {
+      const expenseDate = new Date(expense.date);
+      return expenseDate.getMonth() === currentMonth && expenseDate.getFullYear() === currentYear;
+    });
+
+    // Filtrer les revenus du mois en cours
+    const monthlyIncomes = incomes.filter(income => {
+      const incomeDate = new Date(income.date);
+      return incomeDate.getMonth() === currentMonth && incomeDate.getFullYear() === currentYear;
+    });
+
+    const totalExpenses = monthlyExpenses.reduce((sum, expense) => sum + expense.amount, 0);
+    const totalIncomes = monthlyIncomes.reduce((sum, income) => sum + income.amount, 0);
+    const balance = totalIncomes - totalExpenses;
+
+    return {
+      expenses: totalExpenses,
+      incomes: totalIncomes,
+      balance,
+      isOverBudget: totalExpenses > totalIncomes,
+      overBudgetAmount: totalExpenses - totalIncomes
+    };
+  }, [expenses, incomes, currentMonth, currentYear]);
+
+  const categoryData = useMemo(() => {
+    const monthlyExpenses = expenses.filter(expense => {
+      const expenseDate = new Date(expense.date);
+      return expenseDate.getMonth() === currentMonth && expenseDate.getFullYear() === currentYear;
+    });
+
+    const categoryTotals = monthlyExpenses.reduce((acc, expense) => {
+      const category = categories.find(cat => cat.id === expense.categoryId);
+      if (category) {
+        acc[category.name] = (acc[category.name] || 0) + expense.amount;
+      }
+      return acc;
+    }, {} as Record<string, number>);
+
+    return Object.entries(categoryTotals).map(([name, value]) => ({
+      name,
+      value,
+      color: categories.find(cat => cat.name === name)?.color || '#8884d8'
+    }));
+  }, [expenses, categories, currentMonth, currentYear]);
+
+  const monthlyTrends = useMemo(() => {
+    const last6Months = [];
+    for (let i = 5; i >= 0; i--) {
+      const date = new Date();
+      date.setMonth(date.getMonth() - i);
+      const month = date.getMonth();
+      const year = date.getFullYear();
+
+      const monthExpenses = expenses
+        .filter(expense => {
+          const expenseDate = new Date(expense.date);
+          return expenseDate.getMonth() === month && expenseDate.getFullYear() === year;
+        })
+        .reduce((sum, expense) => sum + expense.amount, 0);
+
+      const monthIncomes = incomes
+        .filter(income => {
+          const incomeDate = new Date(income.date);
+          return incomeDate.getMonth() === month && incomeDate.getFullYear() === year;
+        })
+        .reduce((sum, income) => sum + income.amount, 0);
+
+      last6Months.push({
+        month: date.toLocaleDateString('fr-FR', { month: 'short', year: '2-digit' }),
+        expenses: monthExpenses,
+        incomes: monthIncomes,
+      });
+    }
+    return last6Months;
+  }, [expenses, incomes]);
+
+  const formatCurrency = (amount: number) => {
+    return new Intl.NumberFormat('fr-FR', {
+      style: 'currency',
+      currency: 'EUR',
+    }).format(amount);
+  };
+
+  const currentMonthName = new Date().toLocaleDateString('fr-FR', { 
+    month: 'long', 
+    year: 'numeric' 
+  });
 
   const positionLogo = "absolute top-2 right-2";
   const titleGraphique = "font-bold absolute top-2 left-2";
 
   return (
     <div className="p-10">
+      {/* Header */}
       <div className="flex justify-between">
-        <h1 className="text-2xl font-bold ">Dashboard</h1>
+        <h1 className="text-2xl font-bold">Dashboard</h1>
         <button className="flex cursor-pointer text-xl">
           <Calendar className="mr-1" />
-          {currentMonhtName}
+          {currentMonthName}
         </button>
       </div>
-      <div className="grid grid-cols-3 gap-10 mt-10">
+
+      {/* Totaux */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-10 mt-10">
         <Card>
-          <TrendingUp className={`text-emerald-600 absolute ${positionLogo}`} />
-          Total Revenus
-          <p className="text-2xl ">{totals.totalIncome} Ar</p>
+          <TrendingUp className={`text-emerald-600 ${positionLogo}`} />
+          <p className="text-gray-600">Total Revenus</p>
+          <p className="text-2xl font-bold">{formatCurrency(monthlyData.incomes)}</p>
         </Card>
+
         <Card>
           <TrendingDown className={`text-red-600 ${positionLogo}`} />
-          Total Dépenses
-          <p className="text-2xl ">{totals.totalExpense} Ar</p>
+          <p className="text-gray-600">Total Dépenses</p>
+          <p className="text-2xl font-bold">{formatCurrency(monthlyData.expenses)}</p>
         </Card>
+
         <Card>
           <DollarSign className={`text-emerald-700 ${positionLogo}`} />
-          Solde Actuel
-          <p className="text-2xl ">{totals.balance} Ar</p>
+          <p className="text-gray-600">Solde Actuel</p>
+          <p className="text-2xl font-bold">{formatCurrency(monthlyData.balance)}</p>
         </Card>
       </div>
+
+      {/* Graphiques */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 mt-10">
         <Card>
           <h1 className={`${titleGraphique}`}>Expense by category</h1>
+          <ResponsiveContainer width="100%" height={300}>
+              <PieChart>
+                <Pie
+                  data={categoryData}
+                  cx="50%"
+                  cy="50%"
+                  labelLine={false}
+                  label={({ name, percent }) => `${name} ${((percent ?? 0) * 100).toFixed(0)}%`}
+                  outerRadius={80}
+                  fill="#8884d8"
+                  dataKey="value"
+                >
+                  {categoryData.map((entry, index) => (
+                    <Cell key={`cell-${index}`} fill={entry.color} />
+                  ))}
+                </Pie>
+                <Tooltip formatter={(value) => formatCurrency(value as number)} />
+              </PieChart>
+            </ResponsiveContainer>
         </Card>
         <Card>
-          <h1 className={`${titleGraphique} `}>Monthly Trends</h1>
+          <h1 className={`${titleGraphique}`}>Monthly Trends</h1>
+          <ResponsiveContainer width="100%" height={300}>
+              <BarChart data={monthlyTrends}>
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis dataKey="month" />
+                <YAxis tickFormatter={(value) => `${value}€`} />
+                <Tooltip formatter={(value) => formatCurrency(value as number)} />
+                <Bar dataKey="incomes" fill="#10b981" name="Revenus" />
+                <Bar dataKey="expenses" fill="#ef4444" name="Dépenses" />
+              </BarChart>
+            </ResponsiveContainer>
         </Card>
       </div>
     </div>
