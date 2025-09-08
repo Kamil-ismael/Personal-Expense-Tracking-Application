@@ -68,6 +68,39 @@ export function Categories() {
           {error}
         </div>
       )}
+
+      {/* Add New Category */}
+      {isAddingNew && (
+        <div className="bg-white shadow rounded-lg p-6 border-2 border-blue-200">
+          <h3 className="text-lg font-medium text-gray-900 mb-4">Add New Category</h3>
+          <div className="flex items-center space-x-3">
+            <input
+              type="text"
+              value={newCategoryName}
+              onChange={(e) => setNewCategoryName(e.target.value)}
+              className="flex-1 border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+              placeholder="Category name"
+              onKeyPress={(e) => e.key === 'Enter' && handleAddCategory()}
+              autoFocus
+            />
+            <button
+              onClick={handleAddCategory}
+              disabled={!newCategoryName.trim()}
+              className="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              <Save className="h-4 w-4 mr-1" />
+              Save
+            </button>
+            <button
+              onClick={cancelAddingNew}
+              className="inline-flex items-center px-3 py-2 border border-gray-300 text-sm leading-4 font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+            >
+              <X className="h-4 w-4 mr-1" />
+              Cancel
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
