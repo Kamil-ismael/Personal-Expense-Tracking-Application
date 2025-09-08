@@ -13,7 +13,7 @@ function LoginPage() {
         e.preventDefault();
         if (email != "" && password!="") {
             try {
-                login({email, password})
+                login(email, password)
                 navigate("/Home");
             } catch (err) {
                 console.error("Erreur de connexion :", err);

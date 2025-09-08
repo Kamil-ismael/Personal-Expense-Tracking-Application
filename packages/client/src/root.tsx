@@ -1,5 +1,5 @@
 import App from "./App";
-import { AuthProvider } from "./hooks/useAuth";
+import { AuthProvider } from "./hooks/AuthProviderProps";
 
 function Root() {
     return(

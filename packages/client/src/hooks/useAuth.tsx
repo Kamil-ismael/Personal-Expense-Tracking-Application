@@ -1,66 +1,86 @@
-import { createContext, useContext,
-     useState,useEffect, type ReactNode } from "react";
-import type { User, LoginData, RegisterData} from "../lib/api/Types.ts"
-import * as api from "../lib/api/api.ts"
+import { useContext, useState, useEffect, createContext } from "react";
+import { authApi } from "../lib/api/auth";
+import type { User } from "../lib/api/Types.ts";
+import { getAuthToken } from "../lib/api/helpers";
 
+//  Type du contexte
 interface AuthContextType {
-    user: User | null;
-    loading : boolean;
-    login: (data: LoginData) => Promise<void>;
-    register: (data: RegisterData) => Promise<void>;
-    logout: ()=> void;
+  user: User | null;
+  loading: boolean;
+  login: (email: string, password: string) => Promise<void>;
+  signup: (email: string, password: string) => Promise<void>;
+  logout: () => void;
 }
 
-const AuthContext = createContext<AuthContextType | undefined>(undefined)
+// // Création du contexte
+const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
-interface AuthProviderProps{
-    children : ReactNode
+// Hook personalisé pour utiliser le contexte Auth dans les composants
+export function useAuth() {
+  const context = useContext(AuthContext);
+  if (context == undefined) {
+    throw new Error("useAuth must be used within au AuthProvider");
+  }
+  return context;
 }
+export function useAuthProvider() {
+  const [user, setUser] = useState<User | null>(null);
+  const [loading, setLoading] = useState(true);
 
-export const AuthProvider = ({children}: AuthProviderProps) =>{
-    const [user, setUser] = useState<User| null>(null)
-    const [loading, setLoading] = useState<boolean>(true)
-
-    // useEffect((): void => {
-    //     const storedUser = localStorage.getItem("token")
-    //     if (storedUser) {
-    //         setUser(JSON.parse(storedUser))
-    //     }
-    //     setLoading(false)
-    // },[]);
-
-    const login = async (data: LoginData) => {
-        const res = await api.login(data)
-        setUser(res.user)
-        localStorage.setItem("user", JSON.stringify(res.user))
-        localStorage.setItem("token", res.token)
-    }
-
-    const register = async (data: RegisterData) => {
-        const res = await api.register(data);
-        setUser(res.user);
-        localStorage.setItem("user", JSON.stringify(res.user));
-        localStorage.setItem("token", res.token);
-    };
-
-    const logout = () => {
-        api.logout();
+  useEffect(() => {
+    // Check if user is authenticated on app load
+    const checkAuth = async () => {
+      try {
+        const token = getAuthToken();
+        if (token) {
+          const currentUser = await authApi.getCurrentUser();
+          setUser(currentUser);
+        }
+      } catch (error) {
+        console.error("Auth check failed:", error);
         setUser(null);
-        localStorage.removeItem("user");
-        localStorage.removeItem("token");
+      } finally {
+        setLoading(false);
+      }
     };
 
-    return (
-        <AuthContext.Provider value={ {user , loading , login , register , logout} }>
-        {children}
-        </AuthContext.Provider>
-  );
+    checkAuth();
+  }, []);
+
+  const login = async (email: string, password: string) => {
+    try {
+      const response = await authApi.login(email, password);
+      setUser(response.user);
+    } catch (error) {
+      throw error;
+    }
+  };
+
+  const signup = async (email: string, password: string) => {
+    try {
+      const response = await authApi.signup(email, password);
+      setUser(response.user);
+    } catch (error) {
+      throw error;
+    }
+  };
+
+  const logout = async () => {
+    try {
+      await authApi.logout();
+      setUser(null);
+    } catch (error) {
+      throw error;
+    }
+  };
+
+  return {
+    user,
+    loading,
+    login,
+    signup,
+    logout,
+  };
 }
 
-export const useAuth = () =>{
-    const context = useContext(AuthContext);
-    if (!context) {
-        throw new Error("useAuth doit être utilisé à l'intérieur d'un AuthProvider")
-    }
-    return context
-}
+export { AuthContext };

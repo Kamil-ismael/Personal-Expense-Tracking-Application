@@ -8,7 +8,7 @@ function SignInPage() {
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
     const navigate = useNavigate();
-    const { register } = useAuth()
+    const { signup } = useAuth()
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -17,7 +17,7 @@ function SignInPage() {
             return;
         }
         try {
-            register({email, password})
+            signup(email, password)
             navigate("/");
         } catch (err) {
             console.error("Erreur lors de l'inscription :", err);
