@@ -1,6 +1,6 @@
-import jwt from "jsonwebtoken"
-import bcrypt from "bcryptjs"
-import prisma from "../lib/prisma.js"
+const jwt = require("jsonwebtoken")
+const bcrypt = require("bcryptjs")
+const prisma = require("../lib/prisma.js")
 
 const logIn = async (req, res)=>{
         const {email, password} = req.body
@@ -33,4 +33,4 @@ const logIn = async (req, res)=>{
     }
 }
 
-export default logIn;
+module.exports = logIn

@@ -1,6 +1,6 @@
-import pkg from 'jsonwebtoken';
+const pkg = require("jsonwebtoken")
+const prisma = require("../lib/prisma.js")
 const { verify } = pkg;
-import prisma  from '../lib/prisma.js';
 
 const authenticateToken = async (req, res, next) => {
     const authHeader = req.headers['authorization'];
@@ -23,4 +23,4 @@ const authenticateToken = async (req, res, next) => {
         return res.status(403).json({ error: 'Invalid or Expired Token' });
     }
 }
-export default authenticateToken;
+module.exports = authenticateToken

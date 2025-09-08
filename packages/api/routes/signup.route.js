@@ -1,8 +1,8 @@
-import express from "express"
-import createUser from "../controller/signup.controller.js"
+const express = require("express")
+const createUser = require("../controllers/signup.controller.js")
 
 const signUpRoute = express.Router()
 
 signUpRoute.post("/signup", createUser)
 
-export default signUpRoute
+module.exports = signUpRoute

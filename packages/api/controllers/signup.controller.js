@@ -1,5 +1,5 @@
-import prisma from "../lib/prisma.js"
-import bcrypt from "bcryptjs"
+const prisma = require("../lib/prisma.js")
+const bcrypt = require("bcryptjs")
 
 const createUser = async (req, res) => {
     const { email, password } = req.body
@@ -46,5 +46,4 @@ const createUser = async (req, res) => {
     }
 }
 
-
-export default createUser;
+module.exports = createUser

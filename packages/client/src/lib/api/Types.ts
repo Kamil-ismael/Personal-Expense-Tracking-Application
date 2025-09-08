@@ -16,15 +16,14 @@ export interface Income {
 }
 
 export interface User {
-    id: string;
-    email: string;
-    password : string;
-    token: string;
+  id: string;
+  email: string;
+  token?: string;
 }
 
-export interface AuthResponse{
-    user: User;
-    token : string;
+export interface AuthResponse {
+  user: User;
+  token: string;
 }
 
 export interface LoginData {
@@ -33,7 +32,6 @@ export interface LoginData {
 }
 
 export interface RegisterData {
-  username: string;
   email: string;
   password: string;
 }

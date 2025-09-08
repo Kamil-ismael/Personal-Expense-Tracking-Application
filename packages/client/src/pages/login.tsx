@@ -1,19 +1,19 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import useLog from "../hooks/useLog";
 import { LogIn } from "lucide-react";
+import { useAuth } from "../hooks/useAuth2";
 
 function LoginPage() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const navigate = useNavigate();
+    const {login} = useAuth()
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         if (email != "" && password!="") {
             try {
-                const result = await useLog(email, password);
-                console.log(result);
+                login({email, password})
                 navigate("/Home");
             } catch (err) {
                 console.error("Erreur de connexion :", err);

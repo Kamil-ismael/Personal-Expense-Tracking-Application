@@ -1,48 +1,66 @@
-import { setAuthToken } from "../lib/api/helpers";
+// import React, { createContext, useContext, useState, useEffect, ReactNode } from "react";
+// import type { User, LoginData, RegisterData } from "../lib/api/Types.ts";
+// import * as api from "../lib/api/api.ts"
 
-export const useLog = async (email: string, password: string) => {
-  try {
-    const response = await fetch("http://localhost:8080/api/auth/login", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email, password }),
-    });
+// interface AuthContextType {
+//   user: User | null;
+//   loading: boolean;
+//   login: (data: LoginData) => Promise<void>;
+//   register: (data: RegisterData) => Promise<void>;
+//   logout: () => void;
+// }
 
-    const data = await response.json();
+// interface AuthProviderProps {
+//   children: ReactNode;
+// }
 
-    if (!response.ok) {
-      if (data.message === "email non trouvé") {
-        alert("Email absent de la base de donnée");
-        throw new Error("❌ Email non trouvé");
-      }
-      if (data.message === "mot de passe incorrect") {
-        alert("Connexion échouée");
-        throw new Error("❌ Mot de passe incorrect");
-      }
-    }
+// const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
-    if (data.token) {
-      setAuthToken(data.token);
-      localStorage.setItem("token", data.token);
-    }
+// export const AuthProvider = ({ children }: AuthProviderProps) => {
+//   const [user, setUser] = useState<User | null>(null);
+//   const [loading, setLoading] = useState(true);
 
-    return data;
-  } catch (err) {
-    console.error(err);
-    throw err;
-  }
-};
+//   useEffect(() => {
+//     const storedUser = localStorage.getItem("user");
+//     if (storedUser) {
+//       setUser(JSON.parse(storedUser));
+//     }
+//     setLoading(false);
+//   }, []);
 
-export const useLogOut = () => {
-  localStorage.removeItem("token");
-};
+//   const login = async (data: LoginData) => {
+//     const res = await api.login(data);
+//     setUser(res.user);
+//     localStorage.setItem("user", JSON.stringify(res.user));
+//     localStorage.setItem("token", res.token);
+//   };
 
-export const useSign = async (email: string, password: string) => {
-  const response = await fetch("http://localhost:8080/api/auth/signup", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ email, password }),
-  });
+//   const register = async (data: RegisterData) => {
+//     const res = await api.register(data);
+//     setUser(res.user);
+//     localStorage.setItem("user", JSON.stringify(res.user));
+//     localStorage.setItem("token", res.token);
+//   };
 
-  return response.json();
-};
+//   const logout = () => {
+//     api.logout();
+//     setUser(null);
+//     localStorage.removeItem("user");
+//     localStorage.removeItem("token");
+//   };
+
+//   return (
+//     <AuthContext.Provider value={{ user, loading, login, register, logout }}>
+//     {children}  {/* <-- ici */}
+//     </AuthContext.Provider>
+
+//   );
+// };
+
+// export const useAuth = (): AuthContextType => {
+//   const context = useContext(AuthContext);
+//   if (!context) {
+//     throw new Error("useAuth doit être utilisé à l'intérieur d'un AuthProvider");
+//   }
+//   return context;
+// };

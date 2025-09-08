@@ -1,7 +1,7 @@
-import express from "express"
-import cors from "cors"
-import loginRoutes from "./routes/login.route.js"
-import signUpRoute from "./routes/signup.route.js"
+const express = require("express")
+const cors = require("cors")
+const loginRoutes = require("./routes/login.route.js")
+const signUpRoute = require("./routes/signup.route.js")
 
 const app = express()
 

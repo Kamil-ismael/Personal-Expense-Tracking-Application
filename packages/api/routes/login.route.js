@@ -1,6 +1,6 @@
-import express from "express"
-import logIn from "../controller/login.controller.js"
-import authenticateToken from "../middleware/auth.js"
+const express = require("express")
+const logIn = require("../controllers/login.controller.js")
+const authenticateToken = require("../middleware/auth.js")
 
 const loginRoutes = express.Router()
 
@@ -9,4 +9,4 @@ loginRoutes.get("/me",authenticateToken, (req,res)=>{
     res.json(req.user)
 })
 
-export default loginRoutes
+module.exports = loginRoutes

@@ -1,25 +1,23 @@
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
-import useSign from "../hooks/useSign";
 import { UserRoundPlus } from "lucide-react";
+import { useAuth } from "../hooks/useAuth2";
 
 function SignInPage() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
     const navigate = useNavigate();
+    const { register } = useAuth()
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-
         if (password !== confirmPassword) {
             alert("❌ Les mots de passe ne correspondent pas !");
             return;
         }
-
         try {
-            const result = await useSign(email, password);
-            console.log(result);
+            register({email, password})
             navigate("/");
         } catch (err) {
             console.error("Erreur lors de l'inscription :", err);

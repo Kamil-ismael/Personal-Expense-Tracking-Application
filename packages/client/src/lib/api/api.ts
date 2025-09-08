@@ -10,7 +10,7 @@ export async function login(data: LoginData): Promise<AuthResponse> {
   });
 
   if (!res.ok) {
-    throw new Error("Connexion failed");
+    throw new Error("Échec de la connexion");
   }
 
   return res.json();
@@ -24,8 +24,13 @@ export async function register(data: RegisterData): Promise<AuthResponse> {
   });
 
   if (!res.ok) {
-    throw new Error("Sign Up failed");
+    throw new Error("Échec de l’inscription");
   }
 
   return res.json();
+}
+
+export async function logout(): Promise<void> {
+
+  return Promise.resolve();
 }
