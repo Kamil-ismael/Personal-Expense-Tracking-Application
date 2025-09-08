@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { UserRoundPlus } from "lucide-react";
-import { useAuth } from "../hooks/useAuth2";
+import { useAuth } from "../hooks/useAuth";
 
 function SignInPage() {
     const [email, setEmail] = useState("");
