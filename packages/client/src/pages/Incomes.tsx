@@ -107,6 +107,75 @@ export function Incomes() {
           </div>
         </div>
       </div>
+
+      {/* Income List */}
+      <div className="bg-white shadow overflow-hidden sm:rounded-md">
+        <ul className="divide-y divide-gray-200">
+          {filteredIncomes.length === 0 ? (
+            <li className="px-6 py-12 text-center text-gray-500">
+              <p>No income entries found</p>
+              <Link
+                to="/incomes/new"
+                className="mt-2 inline-flex items-center text-green-600 hover:text-green-500"
+              >
+                <Plus className="h-4 w-4 mr-1" />
+                Add your first income entry
+              </Link>
+            </li>
+          ) : (
+            filteredIncomes.map((income) => (
+              <li key={income.id}>
+                <div className="px-4 py-4 sm:px-6 hover:bg-gray-50">
+                  <div className="flex items-center justify-between">
+                    <div className="flex-1">
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center">
+                          <DollarSign className="flex-shrink-0 mr-1.5 h-5 w-5 text-green-500" />
+                          <p className="text-lg font-medium text-green-600 truncate">
+                            ${Number(income.amount).toFixed(2)}
+                          </p>
+                        </div>
+                        <div className="ml-2 flex-shrink-0 flex">
+                          <Link
+                            to={`/incomes/${income.id}/edit`}
+                            className="text-blue-600 hover:text-blue-500 mr-2"
+                          >
+                            <Edit2 className="h-4 w-4" />
+                          </Link>
+                          <button
+                            onClick={() => handleDelete(income.id)}
+                            className="text-red-600 hover:text-red-500"
+                          >
+                            <Trash2 className="h-4 w-4" />
+                          </button>
+                        </div>
+                      </div>
+                      <div className="mt-2 sm:flex sm:justify-between">
+                        <div className="sm:flex">
+                          <p className="text-sm font-medium text-gray-900">
+                            {income.source}
+                          </p>
+                          <p className="mt-2 flex items-center text-sm text-gray-500 sm:mt-0 sm:ml-6">
+                            <Calendar className="flex-shrink-0 mr-1.5 h-4 w-4 text-gray-400" />
+                            {income.date}
+                          </p>
+                        </div>
+                        {income.description && (
+                          <div className="mt-2 sm:mt-0">
+                            <p className="text-sm text-gray-500 truncate max-w-xs">
+                              {income.description}
+                            </p>
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </li>
+            ))
+          )}
+        </ul>
+      </div>
     </div>
   );
 }
