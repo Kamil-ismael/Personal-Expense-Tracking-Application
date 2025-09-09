@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import { useMemo, useState, useRef } from "react";
 import { DollarSign, TrendingUp, TrendingDown, Calendar } from "lucide-react";
 import { Card } from "../contener/card";
 import { 
@@ -14,23 +14,32 @@ import {
   ResponsiveContainer 
 } from 'recharts';
 import { useApp } from '../../hooks/useApp';
+
 const Dashboard = () => {
   const { expenses, incomes, categories } = useApp(); // Assuming useApp is defined elsewhere, e.g., a custom context hook
 
-  const currentMonth = new Date().getMonth();
-  const currentYear = new Date().getFullYear();
+  const initialMonth = new Date().getMonth();
+  const initialYear = new Date().getFullYear();
+
+  const [selectedMonth, setSelectedMonth] = useState(initialMonth);
+  const [selectedYear, setSelectedYear] = useState(initialYear);
+  const [tempMonth, setTempMonth] = useState(initialMonth);
+  const [tempYear, setTempYear] = useState(initialYear);
+  const [showPicker, setShowPicker] = useState(false);
+
+  const buttonRef = useRef<HTMLButtonElement>(null);
 
   const monthlyData = useMemo(() => {
-    // Filtrer les dépenses du mois en cours
+    // Filtrer les dépenses du mois sélectionné
     const monthlyExpenses = expenses.filter(expense => {
       const expenseDate = new Date(expense.date);
-      return expenseDate.getMonth() === currentMonth && expenseDate.getFullYear() === currentYear;
+      return expenseDate.getMonth() === selectedMonth && expenseDate.getFullYear() === selectedYear;
     });
 
-    // Filtrer les revenus du mois en cours
+    // Filtrer les revenus du mois sélectionné
     const monthlyIncomes = incomes.filter(income => {
       const incomeDate = new Date(income.date);
-      return incomeDate.getMonth() === currentMonth && incomeDate.getFullYear() === currentYear;
+      return incomeDate.getMonth() === selectedMonth && incomeDate.getFullYear() === selectedYear;
     });
 
     const totalExpenses = monthlyExpenses.reduce((sum, expense) => sum + expense.amount, 0);
@@ -44,12 +53,12 @@ const Dashboard = () => {
       isOverBudget: totalExpenses > totalIncomes,
       overBudgetAmount: totalExpenses - totalIncomes
     };
-  }, [expenses, incomes, currentMonth, currentYear]);
+  }, [expenses, incomes, selectedMonth, selectedYear]);
 
   const categoryData = useMemo(() => {
     const monthlyExpenses = expenses.filter(expense => {
       const expenseDate = new Date(expense.date);
-      return expenseDate.getMonth() === currentMonth && expenseDate.getFullYear() === currentYear;
+      return expenseDate.getMonth() === selectedMonth && expenseDate.getFullYear() === selectedYear;
     });
 
     const categoryTotals = monthlyExpenses.reduce((acc, expense) => {
@@ -65,12 +74,13 @@ const Dashboard = () => {
       value,
       color: categories.find(cat => cat.name === name)?.color || '#8884d8'
     }));
-  }, [expenses, categories, currentMonth, currentYear]);
+  }, [expenses, categories, selectedMonth, selectedYear]);
 
   const monthlyTrends = useMemo(() => {
     const last6Months = [];
+    const baseDate = new Date(selectedYear, selectedMonth, 1);
     for (let i = 5; i >= 0; i--) {
-      const date = new Date();
+      const date = new Date(baseDate);
       date.setMonth(date.getMonth() - i);
       const month = date.getMonth();
       const year = date.getFullYear();
@@ -96,7 +106,7 @@ const Dashboard = () => {
       });
     }
     return last6Months;
-  }, [expenses, incomes]);
+  }, [expenses, incomes, selectedMonth, selectedYear]);
 
   const formatCurrency = (amount: number) => {
     return new Intl.NumberFormat('fr-FR', {
@@ -105,10 +115,28 @@ const Dashboard = () => {
     }).format(amount);
   };
 
-  const currentMonthName = new Date().toLocaleDateString('fr-FR', { 
+  const currentMonthName = new Date(selectedYear, selectedMonth).toLocaleDateString('fr-FR', { 
     month: 'long', 
     year: 'numeric' 
   });
+
+  const months = Array.from({ length: 12 }, (_, i) => 
+    new Date(0, i).toLocaleDateString('fr-FR', { month: 'long' })
+  );
+
+  const years = Array.from({ length: 11 }, (_, i) => initialYear - 5 + i);
+
+  const handleButtonClick = () => {
+    setTempMonth(selectedMonth);
+    setTempYear(selectedYear);
+    setShowPicker(!showPicker);
+  };
+
+  const handleConfirm = () => {
+    setSelectedMonth(tempMonth);
+    setSelectedYear(tempYear);
+    setShowPicker(false);
+  };
 
   const positionLogo = "absolute top-2 right-2";
   const titleGraphique = "font-bold absolute top-2 left-2";
@@ -118,10 +146,46 @@ const Dashboard = () => {
       {/* Header */}
       <div className="flex justify-between">
         <h1 className="text-2xl font-bold">Dashboard</h1>
-        <button className="flex cursor-pointer text-xl">
-          <Calendar className="mr-1" />
-          {currentMonthName}
-        </button>
+        <div className="relative">
+          <button 
+            ref={buttonRef}
+            className="flex cursor-pointer text-xl"
+            onClick={handleButtonClick}
+          >
+            <Calendar className="mr-1" />
+            {currentMonthName}
+          </button>
+          {showPicker && (
+            <div className="absolute top-full right-0 bg-white  shadow-xl rounded-lg p-6 border-2 z-10">
+              <div className="flex space-x-4">
+                <select 
+                  value={tempMonth}
+                  onChange={(e) => setTempMonth(parseInt(e.target.value))}
+                  className="border p-2 rounded"
+                >
+                  {months.map((month, index) => (
+                    <option key={index} value={index}>{month}</option>
+                  ))}
+                </select>
+                <select 
+                  value={tempYear}
+                  onChange={(e) => setTempYear(parseInt(e.target.value))}
+                  className="border p-2 rounded"
+                >
+                  {years.map((year) => (
+                    <option key={year} value={year}>{year}</option>
+                  ))}
+                </select>
+              </div>
+              <button 
+                onClick={handleConfirm}
+                className="mt-2 bg-blue-500 text-white px-4 py-2 rounded"
+              >
+                OK
+              </button>
+            </div>
+          )}
+        </div>
       </div>
 
       {/* Totaux */}
