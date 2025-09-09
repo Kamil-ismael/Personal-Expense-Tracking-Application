@@ -49,6 +49,25 @@ export function Incomes() {
           </Link>
         </div>
       </div>
+      
+      {/* Summary Card */}
+      <div className="bg-white overflow-hidden shadow rounded-lg">
+        <div className="p-5">
+          <div className="flex items-center">
+            <div className="flex-shrink-0">
+              <TrendingUp className="h-6 w-6 text-green-600" />
+            </div>
+            <div className="ml-5 w-0 flex-1">
+              <dl>
+                <dt className="text-sm font-medium text-gray-500 truncate">
+                  Total Income {dateRange.start && `(${dateRange.start} - ${dateRange.end || 'now'})`}
+                </dt>
+                <dd className="text-lg font-medium text-green-600">${totalIncome.toFixed(2)}</dd>
+              </dl>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
