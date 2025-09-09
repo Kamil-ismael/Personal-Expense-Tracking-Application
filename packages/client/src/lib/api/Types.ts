@@ -14,3 +14,17 @@ export interface Income {
     description: string;
     createdAt: string;
 }
+
+export interface MonthlySummary {
+  totalIncome: number;
+  totalExpenses: number;
+  balance: number;
+  expensesByCategory: Array<{ category: string; amount: number; color: string }>;
+  monthlyTrends: Array<{ month: string; expenses: number; income: number }>;
+}
+
+export interface BudgetAlert {
+  alert: boolean;
+  message?: string;
+  overageAmount?: number;
+}

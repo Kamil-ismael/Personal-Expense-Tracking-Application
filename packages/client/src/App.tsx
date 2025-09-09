@@ -1,6 +1,10 @@
-
-import "./index.css";
-
-export function App() {
-  return <div className="text-2xl ">mandea</div>;
+import Dashboard from "./component/page/Dashboard";
+function App() {
+  return (
+    <div>
+      <Dashboard />
+    </div>
+  );
 }
+
+export default App;
