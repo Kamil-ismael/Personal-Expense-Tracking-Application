@@ -101,6 +101,76 @@ export function Categories() {
           </div>
         </div>
       )}
+
+      {/* Categories List */}
+      <div className="bg-white shadow overflow-hidden sm:rounded-md">
+        <ul className="divide-y divide-gray-200">
+          {categories.length === 0 ? (
+            <li className="px-6 py-12 text-center text-gray-500">
+              <p>No categories found</p>
+            </li>
+          ) : (
+            categories.map((category : Category) => (
+              <li key={category.id}>
+                <div className="px-4 py-4 sm:px-6 hover:bg-gray-50">
+                  {editingId === category.id ? (
+                    <div className="flex items-center space-x-3">
+                      <input
+                        type="text"
+                        value={editingName}
+                        onChange={(e) => setEditingName(e.target.value)}
+                        className="flex-1 border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                        onKeyPress={(e) => e.key === 'Enter' && handleEditCategory(category.id)}
+                        autoFocus
+                      />
+                      <button
+                        onClick={() => handleEditCategory(category.id)}
+                        disabled={!editingName.trim()}
+                        className="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed"
+                      >
+                        <Save className="h-4 w-4 mr-1" />
+                        Save
+                      </button>
+                      <button
+                        onClick={cancelEditing}
+                        className="inline-flex items-center px-3 py-2 border border-gray-300 text-sm leading-4 font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                      >
+                        <X className="h-4 w-4 mr-1" />
+                        Cancel
+                      </button>
+                    </div>
+                  ) : (
+                    <div className="flex items-center justify-between">
+                      <div className="flex-1">
+                        <p className="text-lg font-medium text-gray-900">{category.name}</p>
+                        <p className="text-sm text-gray-500">
+                          Created {new Date(category.createdAt).toLocaleDateString()}
+                        </p>
+                      </div>
+                      <div className="flex items-center space-x-2">
+                        <button
+                          onClick={() => startEditing(category)}
+                          className="text-blue-600 hover:text-blue-500"
+                          title="Edit category"
+                        >
+                          <Edit2 className="h-4 w-4" />
+                        </button>
+                        <button
+                          onClick={() => handleDeleteCategory(category.id)}
+                          className="text-red-600 hover:text-red-500"
+                          title="Delete category"
+                        >
+                          <Trash2 className="h-4 w-4" />
+                        </button>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              </li>
+            ))
+          )}
+        </ul>
+      </div>
     </div>
   );
 }
