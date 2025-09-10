@@ -1,5 +1,5 @@
 import { apiRequest, setAuthToken, removeAuthToken } from "./helpers";
-import type { User } from "./types.ts";
+import type { User } from "./types";
 
 class AuthApi {
   // Connexion

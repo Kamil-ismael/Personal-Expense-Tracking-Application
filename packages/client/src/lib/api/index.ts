@@ -1,9 +1,7 @@
-export * from "./types.ts";
+export * from "./types";
 export { setAuthToken, removeAuthToken, getAuthToken } from "./helpers";
-
 import { incomeApi } from "./income";
 import { categoryApi } from "./category";
-
 class Api {
   async getCategories() {
     return categoryApi.getCategories();

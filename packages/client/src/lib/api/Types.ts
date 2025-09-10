@@ -28,14 +28,16 @@ export interface Income {
   createdAt: string;
 }
 
-export interface User {
-  id: string;
-  email: string;
-  token?: string;
-  createdAt: string;
+export interface MonthlySummary {
+  totalIncome: number;
+  totalExpenses: number;
+  balance: number;
+  expensesByCategory: Array<{ category: string; amount: number; color: string }>;
+  monthlyTrends: Array<{ month: string; expenses: number; income: number }>;
 }
 
-export interface AuthResponse {
-  user: User;
-  token: string;
+export interface BudgetAlert {
+  alert: boolean;
+  message?: string;
+  overageAmount?: number;
 }
