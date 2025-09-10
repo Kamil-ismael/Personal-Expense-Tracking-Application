@@ -3,6 +3,9 @@ const cors = require('cors');
 const path = require('path');
 require('dotenv').config();
 
+const loginRoutes = require("./routes/login.route.js")
+const signUpRoute = require("./routes/signup.route.js")
+
 const categoryRoutes = require('./routes/categories.routes');
 const incomeRoutes = require('./routes/incomes.routes');
 
@@ -19,6 +22,9 @@ app.use('/uploads', express.static(path.join(__dirname, '../uploads')));
 app.use('/api/categories', categoryRoutes);
 app.use('/api/incomes', incomeRoutes);
 
+app.use("/api/auth", loginRoutes)
+app.use("/api/auth", signUpRoute)
+
 // Health check route
 app.get('/api/health', (req, res) => {
   res.json({ status: 'OK', timestamp: new Date().toISOString() });
@@ -34,5 +40,3 @@ app.use((err, req, res, next) => {
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
-
-
