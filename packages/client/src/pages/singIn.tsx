@@ -13,22 +13,22 @@ function SignInPage() {
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         if (!email || !password || !confirmPassword) {
-            alert("❌ Please fill in all fields.");
+            alert(" Please fill in all fields.");
             return;
         }
         if (password !== confirmPassword) {
-            alert("❌ Les mots de passe ne correspondent pas !");
+            alert(" Password don't match !");
             return;
         }
         if(password.length < 8) {
-            alert("❌ Le mot de passe doit contenir au moins 8 caractères.");
+            alert(" Password must be at least 8 characters long.");
             return;
         }
         try {
             signup(email, password)
             navigate("/");
         } catch (err) {
-            console.error("Erreur lors de l'inscription :", err);
+            console.error("Error during registration :", err);
         }
     };
 

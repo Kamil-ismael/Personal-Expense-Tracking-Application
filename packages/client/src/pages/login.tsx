@@ -16,11 +16,11 @@ function LoginPage() {
                 login(email, password)
                 navigate("/Home");
             } catch (err) {
-                console.error("Erreur de connexion :", err);
+                console.error(" Error during the connexion :", err);
             }
         }
         else{
-            alert("une ou plusieures information maquantes")
+            alert("Error: one or more required fields are missing")
         }
     };
 
