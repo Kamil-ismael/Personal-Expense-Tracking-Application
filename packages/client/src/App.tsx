@@ -3,7 +3,7 @@ import './App.css'
 import LoginPage from './pages/login'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import SingInPage from './pages/singIn'
-import UserInterface from './components/UserInterface'
+import UserInterface from './pages/UserInterface'
 import { AuthProvider } from './components/AuthProviderProps'
 function App() {
 
