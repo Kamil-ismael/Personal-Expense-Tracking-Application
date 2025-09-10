@@ -1,6 +1,6 @@
-import { getAuthToken } from '../lib/api/helpers'
-import type { User } from '../lib/api/Types.ts';
-import { authApi } from '../lib/api/auth';
+import { getAuthToken } from "../lib/api/helpers";
+import type { User } from "../lib/api/types.ts";
+import { authApi } from "../lib/api/auth";
 
 class AuthService {
   async signup(email: string, password: string): Promise<User> {
@@ -23,7 +23,7 @@ class AuthService {
 
     try {
       // Decode JWT token to get user info
-      const payload = JSON.parse(atob(token.split('.')[1]));
+      const payload = JSON.parse(atob(token.split(".")[1]));
       return {
         id: payload.userId,
         email: payload.email,
@@ -47,7 +47,7 @@ class AuthService {
     if (!token) return false;
 
     try {
-      const payload = JSON.parse(atob(token.split('.')[1]));
+      const payload = JSON.parse(atob(token.split(".")[1]));
       return payload.exp * 1000 > Date.now();
     } catch {
       return false;

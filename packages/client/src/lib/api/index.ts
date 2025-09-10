@@ -1,4 +1,4 @@
-export * from "./Types.ts";
+export * from "./types.ts";
 export { setAuthToken, removeAuthToken, getAuthToken } from "./helpers";
 
 import { incomeApi } from "./income";

@@ -5,7 +5,7 @@ require('dotenv').config();
 
 const loginRoutes = require("./routes/login.route.js")
 const signUpRoute = require("./routes/signup.route.js")
-
+const expensesRoutes = require('./routes/expenses.routes');
 const categoryRoutes = require('./routes/categories.routes');
 const incomeRoutes = require('./routes/incomes.routes');
 
@@ -21,7 +21,7 @@ app.use('/uploads', express.static(path.join(__dirname, '../uploads')));
 // Routes
 app.use('/api/categories', categoryRoutes);
 app.use('/api/incomes', incomeRoutes);
-
+app.use('/api/expenses', expensesRoutes)
 app.use("/api/auth", loginRoutes)
 app.use("/api/auth", signUpRoute)
 

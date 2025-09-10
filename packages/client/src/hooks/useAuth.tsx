@@ -1,6 +1,6 @@
 import { useContext, useState, useEffect, createContext } from "react";
 import { authApi } from "../lib/api/auth";
-import type { User } from "../lib/api/Types.ts";
+import type { User } from "../lib/api/types.ts";
 import { getAuthToken } from "../lib/api/helpers";
 
 //  Type du contexte
@@ -67,7 +67,7 @@ export function useAuthProvider() {
 
   const logout = async () => {
     try {
-      await authApi.logout();      
+      await authApi.logout();
       setUser(null);
     } catch (error) {
       throw error;

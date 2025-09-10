@@ -19,13 +19,13 @@ export interface Expense {
   category?: Category;
 }
 export interface Income {
-    id: string;
-    userId: string;
-    amount: number;
-    date: string;
-    source: string;
-    description: string;
-    createdAt: string;
+  id: string;
+  userId: string;
+  amount: number;
+  date: string;
+  source: string;
+  description: string;
+  createdAt: string;
 }
 
 export interface User {

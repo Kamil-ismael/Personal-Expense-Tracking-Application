@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { expenseApi } from '../lib/api/expense';
-import type { Expense, Category } from '../lib/api/Types';
+import { categoryApi } from '../lib/api/category';
+import type { Expense, Category } from '../lib/api/types';
 
 export function useExpenses() {
   const [expenses, setExpenses] = useState<Expense[]>([]);
@@ -25,7 +26,7 @@ export function useExpenses() {
           category: selectedCategory || undefined,
           type: selectedType as 'one-time' | 'recurring' | undefined
         }),
-        CategoryApi.getCategories()
+        categoryApi.getCategories()
       ]);
       setExpenses(expensesData);
       setCategories(categoriesData);
