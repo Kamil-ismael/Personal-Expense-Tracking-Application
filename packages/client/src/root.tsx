@@ -3,9 +3,12 @@ import { AuthProvider } from "./hooks/AuthProviderProps";
 
 function Root() {
     return(
-        <AuthProvider>
-            <App/>
-        </AuthProvider>
+        <div className="w-screen h-screen">
+            <AuthProvider>
+                <App/>
+            </AuthProvider>
+        </div>
+
     )
 }
 

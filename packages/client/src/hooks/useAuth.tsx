@@ -67,7 +67,7 @@ export function useAuthProvider() {
 
   const logout = async () => {
     try {
-      await authApi.logout();
+      await authApi.logout();      
       setUser(null);
     } catch (error) {
       throw error;

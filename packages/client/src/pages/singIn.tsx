@@ -12,8 +12,16 @@ function SignInPage() {
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
+        if (!email || !password || !confirmPassword) {
+            alert("❌ Please fill in all fields.");
+            return;
+        }
         if (password !== confirmPassword) {
             alert("❌ Les mots de passe ne correspondent pas !");
+            return;
+        }
+        if(password.length < 8) {
+            alert("❌ Le mot de passe doit contenir au moins 8 caractères.");
             return;
         }
         try {
