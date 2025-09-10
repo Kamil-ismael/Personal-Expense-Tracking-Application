@@ -4,7 +4,6 @@ export interface Category {
     userId: string;
     createdAt: string;
 }
-
 export interface Expense {
   id: string;
   userId: string;
@@ -18,4 +17,25 @@ export interface Expense {
   receiptUrl?: string;
   createdAt: string;
   category?: Category;
+}
+export interface Income {
+    id: string;
+    userId: string;
+    amount: number;
+    date: string;
+    source: string;
+    description: string;
+    createdAt: string;
+}
+
+export interface User {
+  id: string;
+  email: string;
+  token?: string;
+  createdAt: string;
+}
+
+export interface AuthResponse {
+  user: User;
+  token: string;
 }
