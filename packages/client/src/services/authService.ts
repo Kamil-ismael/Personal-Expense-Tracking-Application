@@ -26,7 +26,8 @@ class AuthService {
       const payload = JSON.parse(atob(token.split('.')[1]));
       return {
         id: payload.userId,
-        email: payload.email
+        email: payload.email,
+        createdAt: payload.createdAt,
       };
     } catch {
       return null;
