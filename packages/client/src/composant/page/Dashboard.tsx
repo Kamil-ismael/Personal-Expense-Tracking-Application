@@ -100,7 +100,7 @@ const Dashboard = () => {
         .reduce((sum, income) => sum + income.amount, 0);
 
       last6Months.push({
-        month: date.toLocaleDateString('fr-FR', { month: 'short', year: '2-digit' }),
+        month: date.toLocaleDateString('en-US', { month: 'short', year: '2-digit' }),
         expenses: monthExpenses,
         incomes: monthIncomes,
       });
@@ -109,19 +109,19 @@ const Dashboard = () => {
   }, [expenses, incomes, selectedMonth, selectedYear]);
 
   const formatCurrency = (amount: number) => {
-    return new Intl.NumberFormat('fr-FR', {
+    return new Intl.NumberFormat('en-US', {
       style: 'currency',
-      currency: 'EUR',
+      currency: 'USD',
     }).format(amount);
   };
 
-  const currentMonthName = new Date(selectedYear, selectedMonth).toLocaleDateString('fr-FR', { 
+  const currentMonthName = new Date(selectedYear, selectedMonth).toLocaleDateString('en-US', { 
     month: 'long', 
     year: 'numeric' 
   });
 
   const months = Array.from({ length: 12 }, (_, i) => 
-    new Date(0, i).toLocaleDateString('fr-FR', { month: 'long' })
+    new Date(0, i).toLocaleDateString('en-US', { month: 'long' })
   );
 
   const years = Array.from({ length: 11 }, (_, i) => initialYear - 5 + i);
