@@ -1,6 +1,6 @@
 
 import { useContext } from 'react';
-import { AppContext } from '../context/AppContext'; // Créez ce contexte si nécessaire (voir solution 3)
+import { AppContext } from '../context/AppContext'; 
 
 interface AppContextType {
   expenses: Array<{ id: string; date: string; amount: number; categoryId: string }>;

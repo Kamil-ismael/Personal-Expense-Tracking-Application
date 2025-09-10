@@ -13,10 +13,10 @@ import {
   Tooltip, 
   ResponsiveContainer 
 } from 'recharts';
-import { useApp } from '../../hooks/useApp';
+import { useApp } from '../../hooks/useSummary';
 
 const Dashboard = () => {
-  const { expenses, incomes, categories } = useApp(); // Assuming useApp is defined elsewhere, e.g., a custom context hook
+  const { expenses, incomes, categories } = useApp();
 
   const initialMonth = new Date().getMonth();
   const initialYear = new Date().getFullYear();
