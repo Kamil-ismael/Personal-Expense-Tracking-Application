@@ -9,6 +9,7 @@ import {Categories} from "./pages/Categories";
 import { AuthProvider } from "./components/AuthProviderProps";
 import { IncomeForm } from "./pages/IncomeForm";
 import { ExpenseForm } from "./pages/ExpensesForm";
+import Profile from "./pages/Profile";
 
 export default function App() {
   return (
@@ -17,10 +18,11 @@ export default function App() {
         <Routes>
           {/* Routes sans NavBar */}
           <Route path="/" element={<Login />} />
-          <Route path="/signup" element={<SignInPAge />} />
+          <Route path="/signIn" element={<SignInPAge />} />
 
           {/* Routes avec NavBar grâce à Layout */}
           <Route element={<Layout />}>
+            <Route path="profile" element={<Profile/>}></Route>
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/expenses" element={<Expenses />} />
             <Route path="/incomes" element={<Incomes />} />

@@ -13,10 +13,11 @@ function LoginPage() {
         e.preventDefault();
         if (email != "" && password!="") {
             try {
-                login(email, password)
-                navigate("/dashboard");
+                await login(email, password)
+                navigate("/profile");
             } catch (err) {
                 console.error(" Error during the connexion :", err);
+                alert("Error: invalid email or password")
             }
         }
         else{
