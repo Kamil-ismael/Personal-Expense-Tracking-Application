@@ -1,5 +1,5 @@
 import { apiRequest, setAuthToken, removeAuthToken } from "./helpers";
-import type { User } from "./types";
+import type { User } from "./Types";
 
 class AuthApi {
   // Connexion

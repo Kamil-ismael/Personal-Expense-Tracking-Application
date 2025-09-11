@@ -13,9 +13,10 @@ function LoginPage() {
         e.preventDefault();
         if (email != "" && password!="") {
             try {
-                login(email, password)
-                navigate("/Home");
+                await login(email, password)
+                navigate("/profile");
             } catch (err) {
+                alert("Login failed. Please check your credentials and try again.");
                 console.error(" Error during the connexion :", err);
             }
         }

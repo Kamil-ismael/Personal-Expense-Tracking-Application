@@ -1,5 +1,5 @@
 import { getAuthToken } from "../lib/api/helpers";
-import type { User } from "../lib/api/types";
+import type { User } from "../lib/api/Types";
 import { authApi } from "../lib/api/auth";
 
 class AuthService {
