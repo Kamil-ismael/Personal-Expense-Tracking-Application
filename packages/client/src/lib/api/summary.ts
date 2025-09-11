@@ -2,7 +2,7 @@
  import { MonthlySummary, BudgetAlert } from './Types';
  import { apiRequest } from './helpers';
 
- class SummaryService {
+ class SummaryApi {
    // Summary and analytics
    async getMonthlySummary(month?: string): Promise<MonthlySummary> {
      const params = new URLSearchParams();
@@ -17,4 +17,4 @@
    }
  }
 
- export const summaryService = new SummaryService();
+ export const summaryApi = new SummaryApi();
