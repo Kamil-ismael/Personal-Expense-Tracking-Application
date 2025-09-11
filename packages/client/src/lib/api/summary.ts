@@ -1,4 +1,4 @@
-import { MonthlySummary, BudgetAlert } from "./types";
+import { MonthlySummary, BudgetAlert } from "./Types";
 import { apiRequest } from "./helpers";
 
 class SummaryService {
