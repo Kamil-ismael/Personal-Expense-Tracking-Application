@@ -101,7 +101,7 @@ class SummaryController {
       );
 
       // Get monthly trends (last 6 months)
-      const monthlyTrends = await AnalyticsController._getMonthlyTrends(
+      const monthlyTrends = await SummaryController._getMonthlyTrends(
         req.user.id,
         year,
         monthNum
