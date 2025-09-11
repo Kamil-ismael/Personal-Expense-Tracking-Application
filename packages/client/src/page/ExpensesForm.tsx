@@ -5,7 +5,7 @@ import { Save, ArrowLeft, Upload, X } from 'lucide-react';
 import { expenseApi } from '../lib/api/expense';
 import type { Category, Expense } from '../lib/api';
 import { categoryApi } from '../lib/api/category';
-
+ 
 interface ExpenseFormData {
   amount: number;
   date: string;
