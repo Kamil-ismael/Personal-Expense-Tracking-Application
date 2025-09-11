@@ -45,7 +45,7 @@ export function IncomeForm() {
               </label>
               <div className="mt-1 relative">
                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                  <span className="text-gray-500 sm:text-sm">Ar</span>
+                  <span className="text-gray-500 sm:text-sm">$</span>
                 </div>
                 <input
                   {...register("amount", {
