@@ -1,6 +1,6 @@
-import { Plus, Edit2, Trash2, Save, X } from 'lucide-react';
-import { useCategories } from '../hooks/useCategories';
-import type { Category } from '../lib/api/types';
+import { Plus, Edit2, Trash2, Save, X } from "lucide-react";
+import { useCategories } from "../hooks/useCategories";
+import type { Category } from "../lib/api/types";
 
 export function Categories() {
   const {
@@ -19,7 +19,7 @@ export function Categories() {
     cancelAddingNew,
     setEditingName,
     setNewCategoryName,
-    setIsAddingNew
+    setIsAddingNew,
   } = useCategories();
 
   if (loading) {
@@ -46,7 +46,8 @@ export function Categories() {
             Categories
           </h2>
           <p className="mt-1 text-sm text-gray-500">
-            Manage your expense categories. You cannot delete categories that are in use by existing expenses.
+            Manage your expense categories. You cannot delete categories that
+            are in use by existing expenses.
           </p>
         </div>
         <div className="mt-4 flex md:mt-0 md:ml-4">
@@ -72,7 +73,9 @@ export function Categories() {
       {/* Add New Category */}
       {isAddingNew && (
         <div className="bg-white shadow rounded-lg p-6 border-2 border-blue-200">
-          <h3 className="text-lg font-medium text-gray-900 mb-4">Add New Category</h3>
+          <h3 className="text-lg font-medium text-gray-900 mb-4">
+            Add New Category
+          </h3>
           <div className="flex items-center space-x-3">
             <input
               type="text"
@@ -80,7 +83,7 @@ export function Categories() {
               onChange={(e) => setNewCategoryName(e.target.value)}
               className="flex-1 border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
               placeholder="Category name"
-              onKeyPress={(e) => e.key === 'Enter' && handleAddCategory()}
+              onKeyPress={(e) => e.key === "Enter" && handleAddCategory()}
               autoFocus
             />
             <button
@@ -110,7 +113,7 @@ export function Categories() {
               <p>No categories found</p>
             </li>
           ) : (
-            categories.map((category : Category) => (
+            categories.map((category: Category) => (
               <li key={category.id}>
                 <div className="px-4 py-4 sm:px-6 hover:bg-gray-50">
                   {editingId === category.id ? (
@@ -120,7 +123,9 @@ export function Categories() {
                         value={editingName}
                         onChange={(e) => setEditingName(e.target.value)}
                         className="flex-1 border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-                        onKeyPress={(e) => e.key === 'Enter' && handleEditCategory(category.id)}
+                        onKeyPress={(e) =>
+                          e.key === "Enter" && handleEditCategory(category.id)
+                        }
                         autoFocus
                       />
                       <button
@@ -142,9 +147,12 @@ export function Categories() {
                   ) : (
                     <div className="flex items-center justify-between">
                       <div className="flex-1">
-                        <p className="text-lg font-medium text-gray-900">{category.name}</p>
+                        <p className="text-lg font-medium text-gray-900">
+                          {category.name}
+                        </p>
                         <p className="text-sm text-gray-500">
-                          Created {new Date(category.createdAt).toLocaleDateString()}
+                          Created{" "}
+                          {new Date(category.createdAt).toLocaleDateString()}
                         </p>
                       </div>
                       <div className="flex items-center space-x-2">

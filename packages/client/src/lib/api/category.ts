@@ -1,5 +1,5 @@
 import { apiRequest } from "./helpers";
-import type { Category } from "./Types.ts";
+import type { Category } from "./types.ts";
 
 class CategoryApi {
   async getCategories(): Promise<Category[]> {

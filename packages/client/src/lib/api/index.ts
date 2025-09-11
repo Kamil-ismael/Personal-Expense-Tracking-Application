@@ -1,12 +1,8 @@
-<<<<<<< HEAD
-  
-=======
 export * from "./Types.ts";
-export { setAuthToken, removeAuthToken, getAuthToken } from "./helpers";
 
+export { setAuthToken, removeAuthToken, getAuthToken } from "./helpers";
 import { incomeApi } from "./income";
 import { categoryApi } from "./category";
-
 class Api {
   async getCategories() {
     return categoryApi.getCategories();
@@ -52,4 +48,3 @@ class Api {
 }
 
 export const api = new Api();
->>>>>>> 26aa63486487840348c7e5c10e71e61a201593b5
