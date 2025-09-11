@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { TrendingUp, TrendingDown, DollarSign, AlertTriangle } from 'lucide-react';
 import { PieChart, Pie, Cell, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import { summaryApi } from '../lib/api/summary';
-import type { MonthlySummary, BudgetAlert } from '../lib/api';
+import type { MonthlySummary, BudgetAlert } from '../lib/api/Types';
 
 export function Dashboard() {
   const [summary, setSummary] = useState<MonthlySummary | null>(null);

@@ -2,7 +2,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Layout } from "./components/Layout";
 import Login from "./pages/login";
 import SignInPAge from "./pages/signIn";
-import Dashboard from "./pages/Dashboard";
+import {Dashboard} from "./pages/Dashboard";
 import {Expenses} from "./pages/Expenses";
 import {Incomes} from "./pages/Incomes";
 import {Categories} from "./pages/Categories";

@@ -8,6 +8,7 @@ const signUpRoute = require("./routes/signup.route.js")
 const expensesRoutes = require('./routes/expenses.route.js');
 const categoryRoutes = require('./routes/categories.routes');
 const incomeRoutes = require('./routes/incomes.routes');
+const SummaryRoutes = require('./routes/summary.routes.js');
 
 const app = express();
 const PORT = process.env.PORT || 8080;
@@ -24,6 +25,7 @@ app.use('/api/incomes', incomeRoutes);
 app.use('/api/expenses', expensesRoutes)
 app.use("/api/auth", loginRoutes)
 app.use("/api/auth", signUpRoute)
+app.use("/api/summary", SummaryRoutes)
 
 // Health check route
 app.get('/api/health', (req, res) => {

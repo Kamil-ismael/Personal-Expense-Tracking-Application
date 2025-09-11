@@ -1,4 +1,4 @@
-import type { Income } from "./types.js";
+import type { Income } from "./Types.js";
 import { apiRequest } from "./helpers";
 
 class IncomeApi {

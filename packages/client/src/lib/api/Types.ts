@@ -41,3 +41,9 @@ export interface BudgetAlert {
   message?: string;
   overageAmount?: number;
 }
+
+export interface User {
+  id: string;
+  email: string;
+  createdAt: string;
+}
