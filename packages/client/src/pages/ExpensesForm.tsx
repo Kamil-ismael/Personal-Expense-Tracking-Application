@@ -3,9 +3,9 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { Save, ArrowLeft, Upload, X } from 'lucide-react';
 import { expenseApi } from '../lib/api/expense';
-import type { Category, Expense } from '../lib/api';
 import { categoryApi } from '../lib/api/category';
- 
+import { Category } from '../lib/api/types';
+
 interface ExpenseFormData {
   amount: number;
   date: string;

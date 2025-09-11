@@ -5,7 +5,7 @@ require('dotenv').config();
 
 const loginRoutes = require("./routes/login.route.js")
 const signUpRoute = require("./routes/signup.route.js")
-const expensesRoutes = require('./routes/expenses.routes');
+const expensesRoutes = require('./routes/expenses.route.js');
 const categoryRoutes = require('./routes/categories.routes');
 const incomeRoutes = require('./routes/incomes.routes');
 

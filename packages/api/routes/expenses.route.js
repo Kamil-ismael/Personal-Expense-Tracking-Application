@@ -1,6 +1,6 @@
 const express = require('express');
 const { authenticateToken } = require('../middleware/auth');
-const { ExpenseController, upload } = require('../controllers/expenseController');
+const { ExpenseController, upload } = require('../controllers/expenses.controller');
 
 const router = express.Router();
 router.use(authenticateToken)

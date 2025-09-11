@@ -14,7 +14,7 @@ function LoginPage() {
         if (email != "" && password!="") {
             try {
                 login(email, password)
-                navigate("/Home");
+                navigate("/dashboard");
             } catch (err) {
                 console.error(" Error during the connexion :", err);
             }

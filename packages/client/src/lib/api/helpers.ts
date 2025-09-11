@@ -59,8 +59,4 @@ const apiFormRequest = async (
   return response.json();
 };
 
-<<<<<<< HEAD
 export { getAuthToken, setAuthToken, removeAuthToken, apiRequest, apiFormRequest, API_BASE_URL };
-=======
-export { getAuthToken, setAuthToken, removeAuthToken, apiRequest, apiFormRequest, API_BASE_URL };
->>>>>>> 26aa63486487840348c7e5c10e71e61a201593b5
