@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { expenseApi } from "../lib/api/expense";
 import { categoryApi } from "../lib/api/category";
-import type { Expense, Category } from "../lib/api/types";
+import type { Expense, Category } from "../lib/api/Types";
 
 export function useExpenses() {
   const [expenses, setExpenses] = useState<Expense[]>([]);
