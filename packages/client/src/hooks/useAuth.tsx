@@ -28,7 +28,18 @@ export function useAuthProvider() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Check if user is authenticated on app load
+    const token = getAuthToken();
+    const savedUser = localStorage.getItem("user");    
+
+    if (token && savedUser) {
+      try {
+        const parsedUser = JSON.parse(savedUser);
+        setUser(parsedUser);
+      } catch (err) {
+        console.error("Invalid user data in localStorage, clearing it", err);
+        localStorage.removeItem("user");
+      }
+    }
     const checkAuth = async () => {
       try {
         const token = getAuthToken();

@@ -1,5 +1,6 @@
 import { useContext } from 'react';
 import { AuthContext } from './useAuth';
+import { AuthContext } from './useAuth';
 
 interface AppContextType {
   expenses: Array<{ id: string; date: string; amount: number; categoryId: string }>;
@@ -8,7 +9,7 @@ interface AppContextType {
 }
 
 export const useApp = (): AppContextType => {
-  const context = useContext(AuthContext as unknown as React.Context<AppContextType>);
+  const context = useContext(AuthContext as unknown as React.Context<AppContextType | null>);
   if (!context) {
     throw new Error('useApp doit être utilisé dans un AppContextProvider');
   }

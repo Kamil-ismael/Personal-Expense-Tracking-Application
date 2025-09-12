@@ -1,28 +1,34 @@
-import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { LogIn } from "lucide-react";
+import { useState } from "react";
+import { UserRoundPlus } from "lucide-react";
 import { useAuth } from "../hooks/useAuth";
 
-function LoginPage() {
+function SignInPage() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [confirmPassword, setConfirmPassword] = useState("");
     const navigate = useNavigate();
-    const {login} = useAuth()
+    const { signup } = useAuth()
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        if (email != "" && password!="") {
-            try {
-                await login(email, password)
-                navigate("/dashboard");
-            } catch (err) {
-                alert("Login failed. Please check your credentials and try again.");
-                console.error(" Error during the connexion :", err);
-                alert("Error: invalid email or password")
-            }
+        if (!email || !password || !confirmPassword) {
+            alert(" Please fill in all fields.");
+            return;
         }
-        else{
-            alert("Error: one or more required fields are missing")
+        if (password !== confirmPassword) {
+            alert(" Password don't match !");
+            return;
+        }
+        if(password.length < 8) {
+            alert(" Password must be at least 8 characters long.");
+            return;
+        }
+        try {
+            signup(email, password)
+            navigate("/");
+        } catch (err) {
+            console.error("Error during registration :", err);
         }
     };
 
@@ -34,17 +40,17 @@ function LoginPage() {
                 onSubmit={handleSubmit}
             >
                 <div className="bg-blue-400 p-5 rounded-full">
-                <LogIn size={32} className="text-white" />
+                <UserRoundPlus size={32} className="text-white" />
                 </div>
                 <div className="flex flex-col text-center space-y-1">
-                <h1 className="text-2xl font-semibold">Sign in to your account</h1>
+                <h1 className="text-2xl font-semibold">Create your account</h1>
                 <p className="text-sm text-gray-600">
                     or{" "}
                     <span 
                     className="text-blue-400 cursor-pointer font-medium hover:underline"
-                    onClick={() => navigate("/signIn")}
+                    onClick={() => navigate("/")}
                     >
-                    create a new account
+                    sign in to your existing account
                     </span>
                 </p>
                 </div>
@@ -63,13 +69,20 @@ function LoginPage() {
                     className="border-gray-300 border-2 w-full h-10 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-blue-300"
                     onChange={(e) => setPassword(e.target.value)}
                 />
+                <p>Confirm your password</p>
+                <input
+                    type="password"
+                    placeholder="Confirm your password"
+                    className="border-gray-300 border-2 w-full h-10 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-blue-300"
+                    onChange={(e) => setConfirmPassword(e.target.value)}
+                />
                 </div>
                 <button 
                 type="submit" 
                 className="bg-blue-400 w-full p-3 rounded-md cursor-pointer text-white font-medium
                             hover:bg-blue-500 transition-colors"
                 >
-                Sign in
+                Create Account
                 </button>
             </form>
         </div>
@@ -77,4 +90,4 @@ function LoginPage() {
     );
 }
 
-export default LoginPage;
+export default SignInPage;

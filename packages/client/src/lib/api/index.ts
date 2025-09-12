@@ -1,4 +1,5 @@
-import { setAuthToken, removeAuthToken, getAuthToken } from "./helpers";
+export * from "./Types";
+export { setAuthToken, removeAuthToken, getAuthToken } from "./helpers";
 import { incomeApi } from "./income";
 import { categoryApi } from "./category";
 
