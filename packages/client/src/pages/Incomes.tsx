@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { Plus, Search, Edit2, Trash2, Calendar, DollarSign, TrendingUp } from 'lucide-react';
+import { Plus, Search, Edit2, Trash2, Calendar, Banknote, TrendingUp } from 'lucide-react';
 import { useIncomes } from '../hooks/useIncomes';
 
 export function Incomes() {
@@ -62,7 +62,7 @@ export function Incomes() {
                 <dt className="text-sm font-medium text-gray-500 truncate">
                   Total Income {dateRange.start && `(${dateRange.start} - ${dateRange.end || 'now'})`}
                 </dt>
-                <dd className="text-lg font-medium text-green-600">${totalIncome.toFixed(2)}</dd>
+                <dd className="text-lg font-medium text-green-600">{totalIncome.toLocaleString("fr-FR")} AR</dd>
               </dl>
             </div>
           </div>
@@ -130,9 +130,9 @@ export function Incomes() {
                     <div className="flex-1">
                       <div className="flex items-center justify-between">
                         <div className="flex items-center">
-                          <DollarSign className="flex-shrink-0 mr-1.5 h-5 w-5 text-green-500" />
+                          <Banknote className="flex-shrink-0 mr-1.5 h-5 w-5 text-green-500" />
                           <p className="text-lg font-medium text-green-600 truncate">
-                            ${Number(income.amount).toFixed(2)}
+                            {Number(income.amount).toLocaleString("fr-FR")} Ar
                           </p>
                         </div>
                         <div className="ml-2 flex-shrink-0 flex">

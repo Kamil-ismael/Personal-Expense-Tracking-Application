@@ -147,7 +147,7 @@ export function ExpenseForm() {
               </label>
               <div className="mt-1 relative">
                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                  <span className="text-gray-500 sm:text-sm">$</span>
+                  <span className="text-gray-500 sm:text-sm">Ar</span>
                 </div>
                 <input
                   {...register('amount', { 
@@ -157,7 +157,7 @@ export function ExpenseForm() {
                   type="number"
                   step="0.01"
                   className="pl-7 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-                  placeholder="0.00"
+                  placeholder="0"
                 />
               </div>
               {errors.amount && (

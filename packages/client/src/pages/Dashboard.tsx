@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { TrendingUp, TrendingDown, DollarSign, AlertTriangle } from 'lucide-react';
+import { TrendingUp, TrendingDown, Banknote, AlertTriangle } from 'lucide-react';
 import { PieChart, Pie, Cell, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import { summaryApi } from '../lib/api/summary';
 import type { MonthlySummary, BudgetAlert } from '../lib/api/Types';
@@ -99,7 +99,7 @@ export function Dashboard() {
               <div className="ml-5 w-0 flex-1">
                 <dl>
                   <dt className="text-sm font-medium text-gray-500 truncate">Total Income</dt>
-                  <dd className="text-lg font-medium text-gray-900">${summary?.totalIncome.toFixed(2) || '0.00'}</dd>
+                  <dd className="text-lg font-medium text-gray-900">{summary?.totalIncome.toLocaleString("fr-FR")} Ar</dd>
                 </dl>
               </div>
             </div>
@@ -115,7 +115,7 @@ export function Dashboard() {
               <div className="ml-5 w-0 flex-1">
                 <dl>
                   <dt className="text-sm font-medium text-gray-500 truncate">Total Expenses</dt>
-                  <dd className="text-lg font-medium text-gray-900">${summary?.totalExpenses.toFixed(2) || '0.00'}</dd>
+                  <dd className="text-lg font-medium text-gray-900">{summary?.totalExpenses.toLocaleString("fr-FR")} Ar</dd>
                 </dl>
               </div>
             </div>
@@ -126,13 +126,13 @@ export function Dashboard() {
           <div className="p-5">
             <div className="flex items-center">
               <div className="flex-shrink-0">
-                <DollarSign className={`h-6 w-6 ${(summary?.balance || 0) >= 0 ? 'text-green-600' : 'text-red-600'}`} />
+                <Banknote className={`h-6 w-6 ${(summary?.balance || 0) >= 0 ? 'text-green-600' : 'text-red-600'}`} />
               </div>
               <div className="ml-5 w-0 flex-1">
                 <dl>
                   <dt className="text-sm font-medium text-gray-500 truncate">Balance</dt>
                   <dd className={`text-lg font-medium ${(summary?.balance || 0) >= 0 ? 'text-green-600' : 'text-red-600'}`}>
-                    ${summary?.balance.toFixed(2) || '0.00'}
+                    {summary?.balance.toLocaleString("fr-FR")} Ar
                   </dd>
                 </dl>
               </div>
@@ -155,7 +155,7 @@ export function Dashboard() {
                     cx="50%"
                     cy="50%"
                     labelLine={false}
-                    label={({ category, amount }) => `${category}: $${amount.toFixed(0)}`}
+                    label={({ category, amount }) => `${category}: ${amount.toFixed(0)} Ar`}
                     outerRadius={80}
                     fill="#8884d8"
                     dataKey="amount"
@@ -164,7 +164,7 @@ export function Dashboard() {
                       <Cell key={`cell-${index}`} fill={entry.color} />
                     ))}
                   </Pie>
-                  <Tooltip formatter={(value: number) => [`$${value.toFixed(2)}`, 'Amount']} />
+                  <Tooltip formatter={(value: number) => [`${value.toFixed(2)} Ar `, 'Amount']} />
                 </PieChart>
               </ResponsiveContainer>
             ) : (
@@ -185,7 +185,7 @@ export function Dashboard() {
                   <CartesianGrid strokeDasharray="3 3" />
                   <XAxis dataKey="month" />
                   <YAxis />
-                  <Tooltip formatter={(value: number) => `$${value.toFixed(2)}`} />
+                  <Tooltip formatter={(value: number) => `${value.toLocaleString("fr-FR")}Ar`} />
                   <Legend />
                   <Bar dataKey="income" fill="#10B981" name="Income" />
                   <Bar dataKey="expenses" fill="#EF4444" name="Expenses" />

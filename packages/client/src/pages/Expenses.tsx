@@ -146,7 +146,7 @@ export function Expenses() {
                         <div className="flex items-center">
                           <Banknote className="flex-shrink-0 mr-1.5 h-5 w-5 text-gray-400" />
                           <p className="text-lg font-medium text-gray-900 truncate">
-                            {Number(expense.amount).toLocaleString("fr-FR")} $
+                            {Number(expense.amount).toLocaleString("fr-FR")} Ar
                           </p>
                           <span className={`ml-2 inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
                             expense.type === 'recurring'
