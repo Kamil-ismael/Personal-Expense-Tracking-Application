@@ -24,7 +24,13 @@ const logIn = async (req, res) => {
     );
 
     const { password: _, ...userWithoutPassword } = user;
-
+    
+    console.log({
+      message: "Connexion réussie",
+      token,
+      user: userWithoutPassword,
+    });
+    
     res.json({
       message: "Connexion réussie",
       token,

@@ -8,7 +8,7 @@ interface AppContextType {
 }
 
 export const useApp = (): AppContextType => {
-  const context = useContext(AuthContext as unknown as React.Context<AppContextType>);
+  const context = useContext(AuthContext as unknown as React.Context<AppContextType | null>);
   if (!context) {
     throw new Error('useApp doit être utilisé dans un AppContextProvider');
   }
