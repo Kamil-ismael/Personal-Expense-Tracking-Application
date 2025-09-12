@@ -1,7 +1,7 @@
 import { useContext, useState, useEffect, createContext } from "react";
 import { authApi } from "../lib/api/auth";
 import type { User } from "../lib/api/Types";
-import { getAuthToken } from "../lib/api/helpers";
+import { getAuthToken, setAuthToken } from "../lib/api/helpers";
 
 //  Type du contexte
 interface AuthContextType {

@@ -1,10 +1,9 @@
 const express = require('express');
-const router = express.Router();
-const { GetSummary, GetSummaryMounthly, GetSummaryAlert } = require('../controller/summary.controller');
-const authenticateToken = require('../prisma/auth');
+const { authenticateToken } = require('../middleware/auth');
+const { SummaryController } = require('../controllers/summary.controller');
 
-router.get('/summary', authenticateToken,GetSummary);
-router.get('/summary/monthly', authenticateToken,GetSummaryMounthly);
-router.get('/summary/alert', authenticateToken,GetSummaryAlert)
-
-module.exports = router
+const router = express.Router()
+router.use(authenticateToken)
+router.get('/monthly', SummaryController.getMonthlySummary);
+router.get('/alerts', SummaryController.getBudgetAlerts);
+module.exports = router;

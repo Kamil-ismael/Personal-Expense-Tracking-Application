@@ -1,5 +1,6 @@
 import { useContext } from 'react';
 import { AuthContext } from './useAuth';
+import { AuthContext } from './useAuth';
 
 interface AppContextType {
   expenses: Array<{ id: string; date: string; amount: number; categoryId: string }>;

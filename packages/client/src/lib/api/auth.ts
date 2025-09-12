@@ -64,7 +64,7 @@ class AuthApi {
   // Récupération de l'utilisateur courant
   async getCurrentUser(): Promise<User> {
     const response = await apiRequest("/auth/me");
-    return response.user;
+    return response;
   }
 }
 

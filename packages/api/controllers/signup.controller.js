@@ -35,9 +35,11 @@ const createUser = async (req, res) => {
         
         await prisma.category.createMany({
             data: [
-                { name: "Loyer", userId: newUser.id },
-                { name: "Nourriture", userId: newUser.id },
-                { name: "Transport", userId: newUser.id }
+                { name: "Rent", userId: newUser.id },
+                { name: "Food", userId: newUser.id },
+                { name: "Transport", userId: newUser.id },
+                { name: "Utilities", userId: newUser.id },
+                { name: "Clothing", userId: newUser.id }
             ]
         })
 

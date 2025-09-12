@@ -1,12 +1,30 @@
 import { User, Settings, Mail, Calendar } from "lucide-react";
 import { useAuth } from "../hooks/useAuth";
-import { format } from "date-fns";
+import { format, isValid, parseISO } from "date-fns";
 import { fr } from "date-fns/locale";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { useAccount } from "../hooks/useAccount";
 
-function UserInterface() {
+// Fonction helper pour formater les dates en sécurité
+const safeFormatDate = (dateString: string | undefined): string => {
+  if (!dateString) {
+    return "Date non disponible";
+  }
+  
+  try {
+    const date = parseISO(dateString);
+    if (!isValid(date)) {
+      return "Date invalide";
+    }
+    return format(date, "dd MMMM yyyy", { locale: fr });
+  } catch (error) {
+    console.error("Erreur de formatage de date:", error);
+    return "Erreur de formatage";
+  }
+};
+
+function Profile() {
   const { user, logout } = useAuth();
   const navigate = useNavigate();
   const [showPasswordForm, setShowPasswordForm] = useState(false);
@@ -39,6 +57,7 @@ function UserInterface() {
 
   return (
     <div className="h-screen w-full flex flex-col space-y-5 p-2">
+    <div className="h-full w-full flex flex-col space-y-8 p-10">
       <h1 className="font-bold text-4xl">Profile</h1>
 
       {/* Account info */}
@@ -70,9 +89,7 @@ function UserInterface() {
               <p className="text-gray-500">Member since</p>
             </div>
             <p className="text-lg text-center flex-1">
-              {user
-                ? format(new Date(user.createdAt), "dd MMMM yyyy", { locale: fr })
-                : "Jan 2025"}
+              {user ? safeFormatDate(user.createdAt) : "Jan 2025"}
             </p>
           </div>
         </div>
@@ -165,7 +182,7 @@ function UserInterface() {
         </div>
       </div>
     </div>
-  );
-}
+    </div>
+  )}
 
-export default UserInterface;
+export default Profile;

@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { incomeApi } from '../lib/api/income';
-import type { Income } from '../lib/api';
+import type { Income } from '../lib/api/Types';
 
 export function useIncomes() {
   const [incomes, setIncomes] = useState<Income[]>([]);

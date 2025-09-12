@@ -1,5 +1,5 @@
 import { apiRequest, apiFormRequest, API_BASE_URL } from "./helpers";
-import type { Expense } from "./types";
+import type { Expense } from "./Types";
 
 class ExpenseApi {
   async getExpenses(filters?: {

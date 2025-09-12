@@ -1,6 +1,6 @@
 import { Plus, Edit2, Trash2, Save, X } from "lucide-react";
 import { useCategories } from "../hooks/useCategories";
-import type { Category } from "../lib/api/types";
+import type { Category } from "../lib/api/Types";
 
 export function Categories() {
   const {
