@@ -1,3 +1,5 @@
+//api/routes/expenses.route.js
+
 const express = require('express');
 const { authenticateToken } = require('../middleware/auth');
 const { ExpenseController, upload } = require('../controllers/expenses.controller');

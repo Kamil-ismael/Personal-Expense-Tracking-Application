@@ -1,3 +1,5 @@
+//pages/Expenses.tsx
+
 import { Link } from 'react-router-dom';
 import { Plus, Search, Filter, Edit2, Trash2, Receipt, Calendar, Banknote} from 'lucide-react';
 import { useExpenses } from '../hooks/useExpenses';

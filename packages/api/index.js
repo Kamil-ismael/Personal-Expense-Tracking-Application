@@ -10,6 +10,7 @@ const categoryRoutes = require('./routes/categories.routes');
 const incomeRoutes = require('./routes/incomes.routes');
 const SummaryRoutes = require('./routes/summary.routes.js');
 const AccountRouter = require("./routes/account.route.js")
+const ReceiptRoutes = require("./routes/receipt.route.js")
 
 const app = express();
 const PORT = process.env.PORT || 8080;
@@ -24,6 +25,7 @@ app.use('/uploads', express.static(path.join(__dirname, '../uploads')));
 app.use('/api/categories', categoryRoutes);
 app.use('/api/incomes', incomeRoutes);
 app.use('/api/expenses', expensesRoutes)
+app.use('/api/receipts', ReceiptRoutes);
 app.use("/api/auth", loginRoutes)
 app.use("/api/auth", signUpRoute)
 app.use("/api/summary", SummaryRoutes)

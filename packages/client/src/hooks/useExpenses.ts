@@ -1,3 +1,5 @@
+//hooks/useExpenses.ts
+
 import { useState, useEffect } from "react";
 import { expenseApi } from "../lib/api/expense";
 import { categoryApi } from "../lib/api/category";
