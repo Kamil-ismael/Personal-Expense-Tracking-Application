@@ -27,9 +27,11 @@ export default function App() {
             <Route path="profile" element={<Profile/>}></Route>
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/expenses" element={<Expenses />} />
+            <Route path="/expenses/:id/edit" element={<ExpenseForm />} />
             <Route path="/incomes" element={<Incomes />} />
             <Route path="/categories" element={<Categories />} />
             <Route path="/incomes/new" element={<IncomeForm/>}></Route>
+            <Route path="/incomes/:id/edit" element={<IncomeForm />} />
             <Route path="/expenses/new" element={<ExpenseForm/>}></Route>
           </Route>
         </Routes>
