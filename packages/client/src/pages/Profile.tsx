@@ -4,6 +4,7 @@ import { format } from "date-fns";
 import { fr } from "date-fns/locale";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
+import { useAccount } from "../hooks/useAccount";
 
 function UserInterface() {
   const { user, logout } = useAuth();
@@ -14,28 +15,30 @@ function UserInterface() {
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
+  const { changePassword } = useAccount();
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-
-    if (newPassword !== confirmPassword) {
-      alert("New passwords do not match!");
-      return;
-    }
-
     try {
-      alert("Password changed successfully");
+      if (newPassword !== confirmPassword) {
+        alert("New passwords do not match.");
+        return;
+      }
+      await changePassword(currentPassword, newPassword);
+      alert("Password changed successfully.");
+      setShowPasswordForm(false);
       setCurrentPassword("");
       setNewPassword("");
       setConfirmPassword("");
-      setShowPasswordForm(false);
-    } catch (error) {
-      console.error("Failed to change password:", error);
-      alert("Failed to change password");
+    }
+    catch (error) {
+      console.error("Error changing password:", error);
+      alert("Failed to change password. Please check your current password and try again.");
     }
   };
 
   return (
-    <div className="h-full w-full flex flex-col space-y-8 p-10">
+    <div className="h-screen w-full flex flex-col space-y-5 p-2">
       <h1 className="font-bold text-4xl">Profile</h1>
 
       {/* Account info */}
